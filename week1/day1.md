@@ -52,7 +52,7 @@
 
 
 
-![IMG_3745](./img/java2.png)
+![IMG_3745](../img/java2.png)
 
 ---
 
@@ -83,7 +83,7 @@
 
 ### JVM의 구성요소
 
-![IMG_3744](./img/java1.png)
+![IMG_3744](../img/java1.png)
 
 ---
 
