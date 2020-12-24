@@ -269,8 +269,130 @@ public class Dispatch{
 
 #### 추상 클래스
 
+추상 클래스는 상속에서 부모 클래스로써 사용된다.
+
+- 추상 메소드 : 선언은 되어있으나 코드가 구현되어있지 않은, 틀만 있는 메소드 / abstract 키워드를 사용
+
+- ```java
+  //추상 클래스를 선언하는 방법
+  abstract class Shape{
+  	public Shape(){}
+  	public void paint(){draw();}
+  	abstract public void draw();
+  }
+  ```
+
+- 추상 클래스는 객체(인스턴스)를 생성할 수 없음 - 객체를 생성할 목적으로 만든 클래스가 아님
+
+- 추상 클래스를 단순히 상속받는 자식 클래스는 추상클래스가 된다
+
+  - ```java
+    abstract class Shape{
+      public Shape(){}
+      public void paint(){draw();}
+      abstract public void draw();
+    }
+    //자식 클래스에도 abstract키워드를 붙혀줘야 한다
+    abstract class Line extends Shape{
+      public String toString(){return "Line";}
+    }
+    ```
+
+- 추상 클래스를 이용하게되면 응용프로그램의 설계와 구현을 분리해서 사용할 수 있고 추상 클래스는 계층적 상속 관계를 가지는 클래스의 구조를 만들 때 적합하다.
 
 
-- 추상 클래스
-- final 키워드
-- Object 클래스
+
+#### final 키워드
+
+- 클래스 : final이 클래스 이름 앞에 사용되면 클래스를 상속받을 수 없음을 말한다.
+- 메소드 : 메소드 앞에 final 속성이 붙으면 해당 메소드는 더 이상 오버라이딩 할 수 없음을 뜻한다
+- 변수/상수 : 상수를 정의할 때 final 키워드를 덧붙여서 상수를 정의한다
+  - final로 상수 필드를 정의할 때는 선언 시에 초기값을 지정해줘야 한다.
+  - 한 번 정의되면 값을 변경할 수 없다.
+  - static final => 프로그램 전체에서 공유하여 사용할 수 있는 상수
+
+
+
+#### Object 클래스
+
+- java.lang은 자바 프로그램에서 가장 많이 사용되는 패키지로써 자바 프로그램 내에서 import 없이 자동으로 포함된다.
+
+- 여기서 Object패키지는 java.lang 패키지 내의 최상위 클래스이다 = 모든 자바 클래스는 Object 클래스로부터 상속받는 개념
+
+- 필드를 가지지 않으며 총 11개의 메소드만으로 구성되어있음
+
+  - 자주 사용되는 메소드
+
+  - 참조 : https://atoz-develop.tistory.com/entry/자바-Object-클래스-정리-toString-equals-hashCode-clone
+
+  - toString()
+
+    - 기본 동작 : 객체의 해쉬코드를 출력
+
+    - override의 목적 : 객체의 정보를 문자열 형태로 표현하고자 할 때
+
+    - ```java
+      String str = new String("Apple");
+      System.out.println(str);
+      ```
+
+      => String 객체를 출력하게 되면 String 객체가 저장하고 있는 문자열이 출력되는데 이것의 이유는 String 클래스가 toString()을 override하고 있기 때문이다
+
+      => 즉 toString()은 어떤 객체의 정보를 문자열 형태로 표현해야 할 떄 호출하는 메소드임
+
+  - equals()
+
+    - 기본 동작 : '==' 연산 후 결과값 리턴
+
+    - override의 목적 : 물리적으로 다른 메모리에 위치하는 객체여도 논리적으로 동일함을 구현하기 위해
+
+      - equals을 사용해서 두 객체의 동일함을 논리적으로 override할 수 있다.
+
+      - ```java
+        public class User{
+          int id;
+          String name;
+          
+          public User(int id, String name){
+            this.id = id;
+            this.name = name;
+          }
+          public int getId(){
+            return id;
+          }
+          @Override
+          public boolean equals(Object obj){
+            //객체를 비교하는 equals를 사용하기위해 오버라이드
+            if(obj instanceof User){
+              return this.getId() == ((User)obj).getId();
+            }else{
+              return false;
+            }
+          }
+          
+          public static void main(String[] args){
+            User user1 = new User(1001, "홍길동");
+            User user2 = new User(1001, "홍길동");
+            
+            System.out.println(user1.equals(user2));
+            //true가 나오게 되고, 두 객체가 같다는 의미는 같은 해시코드 값을 갖는다는 것
+          }
+        }
+        ```
+
+  - hashCode()
+
+    - 기본 동작 : JVM이 부여한 코드 값, 인스턴스가 저장된 가상머신의 주소를 10진수로 반환
+
+    - override의 목적 : 두 개의 서로 다른 메모리에 위치한 객체가 동일성을 갖기 위해
+
+    - 해시코드 : JVM이 인스턴스를 생성할 때 메모리 주소를 변환해서 부여하는 코드이다. 실제 메모리 주소값과는 다른 값이며 실제 메모리 주소는 System.identityHashCode으로 확인 가능
+
+    - 자바에서의 동일성
+
+      - equals()의 리턴값이 true 
+
+      - hashCode()의 리턴값이 동일함
+
+        =>그래서 일반적으로 equals()와 hashCode()는 같이 override함
+
