@@ -18,6 +18,17 @@ jdk는 개발자에게 많은 클래스 파일들을 패키지 형태로 제공�
 
 자주 사용되는 패키지
 - java.lang : 기본적인 클래스와 인터페이스를 제공하고, 자동으로 import 되어있다(import는 다음에서 설명)
+  - Object클래스 : 모든 클래스에 강제로 상속되고, Object만이 아무 클래스도 상속받지 않는 유일한 클래스로 계층 구조 상 최상위 클래스이다
+    - boolean equals(Object obj) : obj가 가리키는 객체와 현재 객체를 비교하여 같으면 true리턴
+    - String toString() : 현 객체에 대한 문자열 표현을 리턴
+  - String클래스 : 문자열을 나타낸다
+    - char charAt(int index) : index 인덱스에 있는 문자열 리턴
+    - int compareTo(String anotherString) : 두 스트링을 사전 순으로 비교하여 두 스트링이 같으면 0리턴
+    - String concat(String str) : 현재 스트링 뒤에 str 스트링을 덧붙인 새로운 스트링 리턴
+    - int length() : 스트링의 길이 리턴
+    - String split(String regex) : 정규식에 일치하는 부분을 중심으로 스트링을 분리, 분리된 스트링들을 배열로 저장하여 리턴
+    - String trim() : 스트링 앞뒤의 공백 문자들을 제거한 스트링을 리턴
+  - Math클래스 : 기본적인 산술연산을 제공하며, 멤버 메소드는 static타입
 - java.util : 날짜, 시간, 벡터, 해쉬맴 등 다양한 유틸리티 클래스와 인터페이스를 제공
 - java.io : 키보드, 모니터, 파일 등의 입/출력 하는 클래스와 인터페이스를 제공
 - java.awt, javax.swing : GUI프로그래밍에 필요한 클래스와 인터페이스를 제공
