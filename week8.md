@@ -52,11 +52,23 @@ interface MobilePhoneInterface extends PhoneInterface{
 
 - 추가적으로 인터페이스의 다중 상속을 허용한다
 
-  - ```
-    interface MusicPhoneInterface extend MobilePhoneInterface, MP3Interface
+  - ```java
+    interface MP3Interface{
+    	void PlayMusic();
+    }
     ```
 
-  - 
+  - 가 있다고 가정하면
+
+  - ```java
+    interface MusicPhoneInterface extends MobilePhoneInterface, MP3Interface{
+    	void playMP3();
+    }
+    ```
+
+    - MobilePhoneInterface와 MP3Interface를 상속받고 있고
+    - MusicPhoneInterface는 이렇게 7개의 멤버를 사용할 수 있다.
+      - MobilePhoneInterface에서 5개의 멤버, MP3Interface에서의 1개의 멤버, 자신(MusicPhoneInterface)에서의 1개의 멤버
 
 ### 인터페이스 구현하는 방법, 인터페이스 레퍼런스를 통해 구현체를 사용하는 방법
 
@@ -82,9 +94,23 @@ class SamsungPhone implements MobilePhoneInterface{
 
 
 
+### 인터페이스의 기본 메소드 (Default Method), 자바 8
 
 
-- 인터페이스의 기본 메소드 (Default Method), 자바 8
+
+- 
 - 인터페이스의 static 메소드, 자바 8
 - 인터페이스의 private 메소드, 자바 9
+
+
+
+
+
+#### 참고
+
+---
+
+명품 JAVA PROGRAMMING - 황기태 
+
+
 
