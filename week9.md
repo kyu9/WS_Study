@@ -1,9 +1,5 @@
 ## 9주차 과제 : 예외처리
 
-- 커스텀한 예외 만드는 법
-
-
-
 ### Error란?
 
 - 컴파일 시 문법적인 오류와 런 타임시 nullpoint와 같은 오류로 프로세스를 종료시킬 수 있는 것이다
@@ -144,8 +140,9 @@ jdk 1.7부터는 하나의 catch블럭에 |를 사용해서 여러가지 예외�
   - 예외를 자신이 처리하지 않고, 자신을 호출하는 메소드에게 책임을 전가
   - 메소드를 정의할 때 throws 예약어를 추가하면 그 메소드를 호출하는 곳에서 예외 처리를 해야 함
   - Function throws SomeException : function이 예외를 던진다
-    - 그렇기 때문에 function을 사용/호출 하는 곳을 try블록으로 감싸줌
-
+    
+- 그렇기 때문에 function을 사용/호출 하는 곳을 try블록으로 감싸줌
+    
   - ```java
     class Test{
     	public static void f() throws ArithmeticException{
@@ -162,8 +159,8 @@ jdk 1.7부터는 하나의 catch블럭에 |를 사용해서 여러가지 예외�
         }
       }
     }
-    ```
-
+  ```
+  
     - 여기서 ArithmeticException은 자바에서 제공해주는 예외 관련 클래스이다
     - 모든 예외 관련 클래스들은 java.lang.Throwable클래스의 하위클래스이다
     - 자주 사용하는 멤버함수
@@ -176,15 +173,33 @@ jdk 1.7부터는 하나의 catch블럭에 |를 사용해서 여러가지 예외�
 
 ---
 
-Exception을 상속받아서 생성해야 한다
+표준 예외 클래스 이외에도 많은 예외 상황을 표현할 수 있다
 
-https://devbox.tistory.com/entry/Java-예외-만들기
+일단 자신만의 예외를 만들기 위해서는 checked/unchecked를 먼저 정해야한다
+
+- 예외를 던졌을 때 사용자 쪽에서 예외 상황을 복구 할 수 있다면 checked 예외 사용
+- checked 예외는 사용자에게 문제를 해결할 기회를 주는 것이면서 예외 처리를 강제하는 것
+- checked 예외를 자주 사용하면 API 사용자를 힘들게 할 수 있기 때문에 적정선을 찾아야함
+
+
+
+실제로 만들어보기
 
 ```java
-class MyException extneds Exception{
-
+class myException extends RuntimeException{
+	MyException(){
+    super();
+  }
+  MyException(String message){
+    super(message);
+  }
 }
 ```
+
+이렇게 직접 생성한 예외를 사용할 수 있다.
+
+- 만약 RuntimeException을 상속하지 않는 checked 예외 클래스를 만든다면, 코드는 오류를 출력
+- checked로 코드를 작성했다면 예외를 try-catch, throw등을 처리해줘야함
 
 
 
