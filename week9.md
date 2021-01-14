@@ -89,7 +89,7 @@ finally{
 
 +다중 catch문
 
-```
+```java
 try{
 	예외가 발생할 가능성이 있는 실행문
 }
@@ -140,9 +140,9 @@ jdk 1.7부터는 하나의 catch블럭에 |를 사용해서 여러가지 예외�
   - 예외를 자신이 처리하지 않고, 자신을 호출하는 메소드에게 책임을 전가
   - 메소드를 정의할 때 throws 예약어를 추가하면 그 메소드를 호출하는 곳에서 예외 처리를 해야 함
   - Function throws SomeException : function이 예외를 던진다
-    
+  
 - 그렇기 때문에 function을 사용/호출 하는 곳을 try블록으로 감싸줌
-    
+  
   - ```java
     class Test{
     	public static void f() throws ArithmeticException{
@@ -159,6 +159,7 @@ jdk 1.7부터는 하나의 catch블럭에 |를 사용해서 여러가지 예외�
         }
       }
     }
+    ```
   ```
   
     - 여기서 ArithmeticException은 자바에서 제공해주는 예외 관련 클래스이다
@@ -166,6 +167,7 @@ jdk 1.7부터는 하나의 catch블럭에 |를 사용해서 여러가지 예외�
     - 자주 사용하는 멤버함수
       - public String getMessage() : Throwable오브젝트의 상세 메시지
       - public void printStackTrace() : Throw가능 오브젝트 및 그 백 트레이스를 표준 에러 스트림에 출력
+  ```
 
 
 
