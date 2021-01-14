@@ -1,6 +1,5 @@
 ## 9주차 과제 : 예외처리
 
-- RuntimeException과 RE가 아닌 것의 차이
 - 커스텀한 예외 만드는 법
 
 
@@ -37,6 +36,30 @@ https://itmining.tistory.com/9에서 가져온 그림
 - 모든 클래스의 조상인 Object클래스를 상속받는 모습
 
 
+
+### Checked Exception vs Unchecked Exception
+
+Checked(Runtime Exception이 아닌 것)
+
+- Exception 클래스의 자손들 중, Runtime Exception을 제외한 모든 클래스
+- 반드시 예외 처리를 해줘야 한다
+- 컴파일 단계에서 확인
+- 예외가 발생시 roll back 하지 않음
+- 대표적으로는 IOException, SqlException
+- 프로그래머의 실수에 의해서 발생할 수 있는 예외임
+- 이 클래스 그룹에 속하는 예외 발생 가능성 있는 코드들은 예외 처리를 해주지 않아도 컴파일시 문제가 되지 않음 = 애초부터 예외가 발생하지 않도록 코딩하는것이 중요하다
+
+
+
+Unchecked(Runtime Exception인 것)
+
+- Runtime Exception 클래스와 자식들 클래스
+- 명시적 처리를 강제하지 않는다
+- 실행 단계에서 확인
+- 예외 발생시 roll back함
+- 대표적으로는 NullPointerException, IllegalArgumentException, IndexOutOfBoundException, SystemException
+- 주로 외부의 영향으로 발생하는 예외임, 사용자가 존재하지 않는 파일을 입력하거나 입력한 데이터의 형식이 잘못되엇을 경우
+  - 이를 반드시 처리해줘야하고 처리 안하면 컴파일 시 에러가 발생함
 
 ### 예외 처리
 
@@ -146,6 +169,22 @@ jdk 1.7부터는 하나의 catch블럭에 |를 사용해서 여러가지 예외�
     - 자주 사용하는 멤버함수
       - public String getMessage() : Throwable오브젝트의 상세 메시지
       - public void printStackTrace() : Throw가능 오브젝트 및 그 백 트레이스를 표준 에러 스트림에 출력
+
+
+
+### 커스텀한 예외
+
+---
+
+Exception을 상속받아서 생성해야 한다
+
+https://devbox.tistory.com/entry/Java-예외-만들기
+
+```java
+class MyException extneds Exception{
+
+}
+```
 
 
 
