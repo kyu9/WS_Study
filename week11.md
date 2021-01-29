@@ -102,6 +102,25 @@ protected Enum(String name, int ordinal) : 유일한 생성자로 프로그래�
 
 ### EnumSet
 
+java.util에 존재하며, class EnumSet<E extends Enum<E>>이렇게 선언하면서 사용한다
+
+
+
+EnumSet은 열거형 유형과 함게 사용하기 위한 set구현체이다. 
+
+반복하는 메소드에 의해 리턴된 반복기는 열거 형 상수가 선언된 순서로 요소를 순회하며, 리턴된 반복기는 약하게 일관성이 있음
+
+Null 요소는 허용되지 않으며 만약 null 요소를 삽입하려고 하면 NullPointerException이 발생한다. 그러나 null요소가 있는지 테스트하는 단계나 제거하려는 시도는 가능하다
+
+EnumSet은 동기화되지 않는다. 여러 스레드가 동시에 열거형 집합에 접근하고 적어도 하나의 스레드가 집합을 수정하는 경우에 외부에서 동기화되어야 한다.
+
+
+
+메소드들
+
+- allOf : 지정된 요소 타입의 모든 요소를 포함하는 enum set을 만듬
+- noneOf : 지정된 요소 타입을 사용하여 빈 enum set을 만듬
+
 
 
 
@@ -115,6 +134,8 @@ protected Enum(String name, int ordinal) : 유일한 생성자로 프로그래�
 #### 참고
 
 ---
+
+https://docs.oracle.com/javase/8/docs/api/java/util/EnumSet.html
 
 https://www.opentutorials.org/module/1226/8025
 
