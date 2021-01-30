@@ -72,13 +72,13 @@ Enum으로 정의할 때 사용한 이름(subject) 을 String이나 int와 같�
 
   - ![enum7](./img/enum7.png)
   - ![enum8](./img/enum8.png)
-
 - valueOf() : 문자열로 enum 요소의 이름을 찾아서 요소의 이름을 리턴
   - ![enum9](./img/enum9.png)
   - ![enum10](./img/enum10.png)
-
 - name() : 호출된 값의 이름을 String으로 리턴
 - ordinal() : 해당 값이 enum이 정의된 순서를 정수값으로 리턴
+  - 이것은 언제  다른 사람들이 사용할 수도 있기 떄문에 사용을 덜 한다
+  - (심지어 찾아보니까 Most programmer들은 사용하지 않는다고 주석으로도 적혀있었다!)
 - compareTo(E o ) : enum과 지정된 객체의 순서를 비교, 지정된 객체보다 작은 경우, 음의 정수, 동일하면 0, 크면 양의 정수 리턴
 - equals(Object other) : 지정된 객체가 enum 정수와 같은경우, true를 리턴
 
@@ -125,7 +125,11 @@ EnumSet은 동기화되지 않는다. 여러 스레드가 동시에 열거형 �
 
 
 
+Type Safety 
 
+
+
+tip) 값을 매기고 순서를 정할때는 1,2,3... 이렇게 가는게아니라 10,20,30 이렇게 순서를 매기면 편하다! => 사이에 값을 추가할 일이 생길것이기 때문에!
 
 
 
