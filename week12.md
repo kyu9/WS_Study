@@ -1,7 +1,5 @@
 # 12주차 과제 : 애노테이션
 
-- [@retention](https://github.com/retention)
-- [@target](https://github.com/target)
 - [@documented](https://github.com/documented)
 - 애노테이션 프로세서
 
@@ -38,8 +36,8 @@ Annotation은 *주석* 이라는 의미를 가지고 있다. 하지만 /나 /*�
 #### 선언방법
 
 ```java
-@Retention(용도)
-@Target(범위)
+@Retention()
+@Target()
 public @interface ExAnnotation{
   //타입 요소명() default값;
   String value(); // String형 기본 요소
@@ -67,11 +65,191 @@ public @interface ExAnnotation{
 
 
 
+### @Retention이란
+
+어느 시점까지 Annotation의 메모리를 가져갈 건지 설정하는 부분
+
+
+
+조금 더 알아보기 위해서 내부를 들여다 보았다
+
+```java
+package java.lang.annotation;
+
+/**
+ * Indicates how long annotations with the annotated type are to
+ * be retained.  If no Retention annotation is present on
+ * an annotation type declaration, the retention policy defaults to
+ * {@code RetentionPolicy.CLASS}.
+ *
+ * <p>A Retention meta-annotation has effect only if the
+ * meta-annotated type is used directly for annotation.  It has no
+ * effect if the meta-annotated type is used as a member type in
+ * another annotation type.
+ *
+ * @author  Joshua Bloch
+ * @since 1.5
+ * @jls 9.6.3.2 @Retention
+ */
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.ANNOTATION_TYPE)
+public @interface Retention {
+    /**
+     * Returns the retention policy.
+     * @return the retention policy
+     */
+    RetentionPolicy value();
+}
+
+```
+
+annotation 유형이 있는 annotation이 보존되는 기간을 나타냄
+
+인자로는 RetentionPolicy가 들어가게 된다
+
+
+
+인자로 들어가는  RetentionPolicy를 알아보기 위해 다시 또 내부를 들여다봤다
+
+```java
+package java.lang.annotation;
+
+/**
+ * Annotation retention policy.  The constants of this enumerated type
+ * describe the various policies for retaining annotations.  They are used
+ * in conjunction with the {@link Retention} meta-annotation type to specify
+ * how long annotations are to be retained.
+ *
+ * @author  Joshua Bloch
+ * @since 1.5
+ */
+public enum RetentionPolicy {
+    /**
+     * Annotations are to be discarded by the compiler.
+     */
+    SOURCE,
+
+    /**
+     * Annotations are to be recorded in the class file by the compiler
+     * but need not be retained by the VM at run time.  This is the default
+     * behavior.
+     */
+    CLASS,
+
+    /**
+     * Annotations are to be recorded in the class file by the compiler and
+     * retained by the VM at run time, so they may be read reflectively.
+     *
+     * @see java.lang.reflect.AnnotatedElement
+     */
+    RUNTIME
+}
+```
+
+- RetentionPolicy값을 넣어주면 그것으로 annotation의 메모리 보유 범위가 결정된다
+- 요소
+  - SOURCE : 해당 annotation의 메모리를 컴파일러가 버린다
+  - CLASS : 컴파일러가 컴파일에서는 annotation의 메모리를 가져가지만 실제론 런타임시에 사라진다
+  - RUNTIME : 컴파일러에 의해서 클래스 파일에 기록되고, 런타임 시 JVM에 의해 유지된다. 
+
+
+
+```java
+@Retention(RetentionPolicy.RUNTIME)
+```
+
+이렇게 사용하고 RUNTIME 자리에 필요한 요소들을 넣어서 사용가능
 
 
 
 
 
+
+
+### @Target이란
+
+annotation이 적용될 위치를 결정
+
+이것도 내부를 들여다보면 이렇게 설명해두었다.
+
+```java
+package java.lang.annotation;
+
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.ANNOTATION_TYPE)
+public @interface Target {
+    /**
+     * Returns an array of the kinds of elements an annotation type
+     * can be applied to.
+     * @return an array of the kinds of elements an annotation type
+     * can be applied to
+     */
+    ElementType[] value();
+}
+```
+
+위에서의 Retention 처럼 ElementType의 요소들을 원하는 만큼 넣을 수 있는 것 처럼 보인다
+
+
+
+다시 ElementType을 찾아보자
+
+```java
+package java.lang.annotation;
+
+public enum ElementType {
+    /** Class, interface (including annotation type), or enum declaration */
+    TYPE,
+
+    /** Field declaration (includes enum constants) */
+    FIELD,
+
+    /** Method declaration */
+    METHOD,
+
+    /** Formal parameter declaration */
+    PARAMETER,
+
+    /** Constructor declaration */
+    CONSTRUCTOR,
+
+    /** Local variable declaration */
+    LOCAL_VARIABLE,
+
+    /** Annotation type declaration */
+    ANNOTATION_TYPE,
+
+    /** Package declaration */
+    PACKAGE,
+
+    /**
+     * Type parameter declaration
+     *
+     * @since 1.8
+     */
+    TYPE_PARAMETER,
+
+    /**
+     * Use of a type
+     *
+     * @since 1.8
+     */
+    TYPE_USE
+}
+```
+
+- TYPE : 타입(클래스, 인터페이스, enum) 선언 시 사용
+- FIELD : 멤버 변수 선언 시 사용(enum 포함)
+- METHOD : 메소드 선언 시 사용
+- PARAMETER : 매개 변수 선언 시 사용
+- CONSTRUCTOR : 생성자 선언 시 사용
+- LOCAL_VARIABLE : 지역 변수 선언 시 사용
+- ANNOTATION_TYPE : Annotation type 선언 시
+- PACKAGE : 패키지 선언 시
+- TYPE_PARAMETER : 변수 타입 선언 시
+- TYPE_USER : 타입 사용 시
 
 
 
