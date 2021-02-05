@@ -298,7 +298,7 @@ public @interface Documented {
 
 ### 애노테이션 프로세서
 
-Annotation Processing이란? (from Stackoverflow)
+#### Annotation Processing이란? (from Stackoverflow)
 
 -> 자바 컴파일러의 컴파일 단계에서 유저가 정의한 annotation의 소스코드를 분석하고 처리하기 위해 사용되는 훅이다. 컴파일 에러나 컴파일 경고를 만들어내거나 소스코드(.java)와 바이트코드(.class)를 내보내기도 한다
 
@@ -311,6 +311,8 @@ Annotation Processing이란? (from Stackoverflow)
 단점은 기존의 클래스 코드를 변경할 때는 내부 클래스를 사용해서 기존 코드를 만지기 때문에 해킹에 비슷하다
 
 annotation process를 직접 작성하거나 만들어진 annotation processor를 확인하면 Abstract Processor 클래스를 상속받는 것을 알 수 있다.
+
+
 
 
 
