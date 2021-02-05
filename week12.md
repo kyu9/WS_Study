@@ -1,10 +1,5 @@
 # 12주차 과제 : 애노테이션
 
-- [@documented](https://github.com/documented)
-- 애노테이션 프로세서
-
-
-
 ### 애노테이션이란
 
 Annotation은 *주석* 이라는 의미를 가지고 있다. 하지만 /나 /*와 같은 주석과는 확실히 다르다
@@ -62,6 +57,21 @@ public @interface ExAnnotation{
 ```
 
 - 만약 annotation 안에 있는 요소의 값에 default값이 설정되어 있다면, 값을 따로 설정하지 않아도 되지만(int) default값이 없는 경우에는 값을 설정해줘야 함(String)
+
+
+
+### 표준 Annotation
+
+```
+@FunctionalInterface - Specifies that the type declaration is intended to be a functional interface, since Java 8.
+```
+
+- @Override : 메소드가 override되었는지 확인하고 만약 부모 클래스나 구현된 인터페이스에서 메소드를 찾지 못했을 때 컴파일 경고를 발생시킨다
+- @Deprecated : 메소드에 마킹을 해두고 만약 메소드가 사용되었을 때 컴파일 경고를 줌
+
+- @SafeVarargs : 자바 7부터 가변인자 매개변수를 사용한 메소드나 생성자를 부르는 것들의 경고들을 무시
+- @SurppressWarnings : annotation 인자들 안의 컴파일 시의 경고를 컴파일러로 하여금 무시하도록 함
+- @FunctionalInterface : 자바 8부터 기능적 인터페이스가 되기 위해 의도된 타입 선언을 구체화함
 
 
 
@@ -255,6 +265,53 @@ public enum ElementType {
 
 
 
+### @Documented이란
+
+형태를 가지는 annotation이 javadoc 같은 툴에 의해서 default로 문서화 되는 것을 나타냄
+
+=문서에 정보가 표현된다라고 생각하면 될듯하다
+
+```java
+package java.lang.annotation;
+
+/**
+ * Indicates that annotations with a type are to be documented by javadoc
+ * and similar tools by default.  This type should be used to annotate the
+ * declarations of types whose annotations affect the use of annotated
+ * elements by their clients.  If a type declaration is annotated with
+ * Documented, its annotations become part of the public API
+ * of the annotated elements.
+ *
+ * @author  Joshua Bloch
+ * @since 1.5
+ */
+@Documented
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.ANNOTATION_TYPE)
+public @interface Documented {
+}
+```
+
+
+
+
+
+### 애노테이션 프로세서
+
+Annotation Processing이란? (from Stackoverflow)
+
+-> 자바 컴파일러의 컴파일 단계에서 유저가 정의한 annotation의 소스코드를 분석하고 처리하기 위해 사용되는 훅이다. 컴파일 에러나 컴파일 경고를 만들어내거나 소스코드(.java)와 바이트코드(.class)를 내보내기도 한다
+
+
+
+이것의 가장 대표적인 예시는 lombok가 있으며 
+
+장점은 런타임 비용이 안든다는점이고 
+
+단점은 기존의 클래스 코드를 변경할 때는 내부 클래스를 사용해서 기존 코드를 만지기 때문에 해킹에 비슷하다
+
+annotation process를 직접 작성하거나 만들어진 annotation processor를 확인하면 Abstract Processor 클래스를 상속받는 것을 알 수 있다.
+
 
 
 ### 참고사이트
@@ -264,3 +321,9 @@ public enum ElementType {
 https://www.nextree.co.kr/p5864/
 
 https://coding-factory.tistory.com/575
+
+http://cris.joongbu.ac.kr/course/java/api/java/lang/annotation/Documented.html
+
+https://yadon079.github.io/2021/java%20study%20halle/week-12
+
+https://en.wikipedia.org/wiki/Java_annotation
