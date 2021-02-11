@@ -1,10 +1,5 @@
 # 13주차 과제 : I/O
 
-- 표준 스트림 (System.in, System.out, System.err)
-- 파일 읽고 쓰기
-
-
-
 ### 스트림 (Stream) / 버퍼 (Buffer) / 채널 (Channel) 기반의 I/O
 
 #### 스트림 (Stream)
@@ -90,7 +85,49 @@ OutputStream 클래스의 메소드들
 
 
 
+### 표준 스트림 (System.in, System.out, System.err)
 
+System 클래스는 실행시간 환경과 관련된 속성과 메소드를 가지고 있다. 
+
+System 클래스에서 제공되는 out과 in을 이용한 표준 입력, 출력, 에러 출력에 관한 클래스 변수, 외부적으로 정의된 프로퍼티 및 환경 변수의 접근, 파일 및 라이브러리의 로딩 방법, 객체를 복사해주는 메소드와 프로그램을 작성할 때 사용할 수 있는 유용한 메소드
+
+#### System.in
+
+System.in 의 변수 타입이 InputStream 형태로 지정이 되어있다. 
+
+위에서 언급했지만 InputStream은 최상위 클래스이면서 추상 클래스이기 때문에 InputStream은 객체를 생성할 수 없는 클래스다
+
+System.in 을 통해서 접근하는 객체는 JVM이 메모리로 올라오면서 미리 객체를 생성해 두는 대표적인 객체이다. 자료형이 InputStream이기 떄문에 바이트 단위로만 입출력된다.
+
+키보드에서 입력하는 자료는 때에 따라서 두 바이트가 합쳐져야 의미를 가지는 경우가 있다. 그래서 System.in을 통해서 읽을 때는 영문과 한글의 처리를 분리해서 구성해야 잘 인식된다.
+
+
+
+#### System.out
+
+가장 흔하게 System.out.println으로 사용하면서 본 함수이다
+
+System.out 변수는 표준 출력 장치 객체를 가리키는 대표적인 출력 변수이다.
+
+System.out은 PrintStream 타입으로 되어있는데 여기서 PrintStream이란 OutputStream 클래스의 후손 클래스로 Exception을 안전하게 처리할 메소드로만 구성이 되어있다. 그래서 굳이 try-catch 문 같이 따로 처리를 해주지 않아도 괜찮다
+
+
+
+#### System.err
+
+System.err 객체는 표준 에러 출력 장치를 의미한다. 오류가 발생하게 되면 System.err로 알려줘야 하는 내용이 나온다고 생각하면 된다.
+
+System.err 는 PrintStream 클래스 타입으로 System.out을 사용하는 방법과 같다.
+
+![System1](./img/System.png)
+
+![System1](./img/System1.png)
+
+
+
+
+
+### 파일 읽고 쓰기
 
 
 
@@ -107,3 +144,5 @@ https://real-dongsoo7.tistory.com/70
 https://m.blog.naver.com/PostView.nhn?blogId=redbird38&logNo=120095618390&proxyReferer=https:%2F%2Fwww.google.com%2F
 
 https://develop-im.tistory.com/54
+
+https://hyeonstorage.tistory.com/235
