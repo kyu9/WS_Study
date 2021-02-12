@@ -12,3 +12,26 @@ https://github.com/whiteship/live-study/issues
 
 1주차 : [JVM은 무엇이며 자바 코드는 어떻게 실행하는 것인가.](./week1/day1.md)
 
+2주차 : [자바 데이터 타입, 변수, 그리고 배열](./week2.md)
+
+3주차 : [연산자](./week3.md)
+
+4주차 : [제어문](./week4.md)
+
+5주차 : [클래스](./week5.md)
+
+6주차 : [상속](week6.md)
+
+7주차 : [패키지](./week7.md)
+
+8주차 : [인터페이스](./week8.md)
+
+9주차 : [예외 처리](./week9.md)
+
+10주차 : [멀티쓰레드 프로그래밍](./week10.md)
+
+11주차 : [Enum](./week11.md)
+
+12주차 : [애노테이션](./week12.md)
+
+13주차 : [I/O](./week13.md)
