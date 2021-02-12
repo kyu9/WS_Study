@@ -7,3 +7,8 @@ https://github.com/whiteship/live-study/issues
 
 
 18주의 80%를 진행하게되면 티셔츠를 제공해준다! 목표가 있으니까 열심히만하면 된다
+
+
+
+1주차 : [JVM은 무엇이며 자바 코드는 어떻게 실행하는 것인가.](./week1/day1.md)
+

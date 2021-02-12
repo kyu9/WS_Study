@@ -129,6 +129,73 @@ System.err 는 PrintStream 클래스 타입으로 System.out을 사용하는 방
 
 ### 파일 읽고 쓰기
 
+자바에서 파일을 읽고 쓰는 방법은 자바의 내장 클래스인 FileWriter, BufferedWriter, FileReader, BufferedReader를 사용한다
+
+여기서 파일 쓰기를 위한 BufferedWriter와 FileWriter의 객체를 사용할 때 try-catch의 마지막 finally block에서 null check 및 close()하는 코드를 삽입해 줘야 하는데, 여기서는 java 7에 도입된 try catch with resources을 사용해서 진행해보았다.
+
+이것은 try catch block에서 생성한 객체를 자동으로 close() 해주는 향상된 try catch문법이다
+
+```java
+import java.io.*;
+
+public class Main{
+    public static void main(String[] args) {
+      //파일을 쓰는(없으면 생성)하는 코드
+        try(
+          //여기서 객체를 생성하게되면 try가 종료되고 나서 자동으로 close된다
+                FileWriter fw = new FileWriter("Testing.txt", true);
+                BufferedWriter bw = new BufferedWriter(fw);
+                )
+        {
+          //버퍼에 데이터를 넣고
+            bw.write("first Test");
+          //버퍼에 새로운 줄을 넣어주고
+            bw.newLine();
+            bw.write("Second Test");
+            bw.newLine();
+          //버퍼의 내용을 파일에 작성
+            bw.flush();
+        }catch(IOException e){
+            System.out.println(e);
+        }
+
+        File f = new File("Testing.txt");
+      //파일이 존재하고 있는 지 확인
+        if(f.isFile()){
+            System.out.println("Testing.txt 파일이 이미 존재합니다.");
+        }
+
+      //파일을 읽는 코드
+        try(
+                FileReader rw = new FileReader("Testing.txt");
+                BufferedReader br = new BufferedReader(rw);
+                ){
+            String readLine = null;
+          //만약 읽을라인이 없다면 null을 리턴한다
+            while((readLine = br.readLine()) != null){
+                System.out.println(readLine);
+            }
+        }catch (IOException e){
+            System.out.println(e);
+        }
+
+
+    }
+}
+```
+
+
+
+위 코드 실행결과
+
+![1](./img/file1.png)
+
+
+
+실제 파일이 생성된 것과 내용 확인
+
+![File2](./img/file2.png)
+
 
 
 
@@ -146,3 +213,7 @@ https://m.blog.naver.com/PostView.nhn?blogId=redbird38&logNo=120095618390&proxyR
 https://develop-im.tistory.com/54
 
 https://hyeonstorage.tistory.com/235
+
+https://vmpo.tistory.com/63
+
+https://vmpo.tistory.com/entry/java-try-catch-with-resources-예외처리?category=731823
