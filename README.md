@@ -35,3 +35,6 @@ https://github.com/whiteship/live-study/issues
 12주차 : [애노테이션](./week12.md)
 
 13주차 : [I/O](./week13.md)
+
+14주차 : [제네릭](./week14.md)
+
