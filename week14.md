@@ -1,8 +1,5 @@
 # 14주차 과제 : 제네릭
 
-- 제네릭 사용법
-- 제네릭 주요 개념(바운디드 타입, 와일드 카드)
-- 제네릭 메소드 만들기
 - Erasure
 
 
@@ -122,6 +119,199 @@ public class vTest {
 
 
 
+### 제네릭 만들기
+
+#### 제네릭 클래스
+
+기존의 클래스를 만드는 방법과 유사하지만 차이점이 있다면 클래스 이름 다음에 일반화된 타입의 매개변수를 <> 사이에 추가하는 것에 차이가 있다.
+
+
+
+```java
+import java.util.Vector;
+
+public class vTest {
+    //제네릭 클래스이며 타입 매개변수는 T
+    static class MyClass<T>{
+        //변수 val의 타입은 T
+        T val;
+        void set(T a){
+            val = a;
+        }
+        T get(){
+            return val;
+        }
+    }
+    public static void main(String[] args) {
+        //T자리에 구체적인 타입을 넣어주고 사용할 수 있다.
+        MyClass<String> s = new MyClass<String>();
+
+        //이렇게 값을 넣어주고 출력할 수 있다.
+        s.set("HELLO!");
+        System.out.println(s.get());
+
+        //구체화할 때는 기본타입사용 불가능(바로 밑 주석)
+        //MyClass<int> i = new MyClass<int>();
+        MyClass<Integer> i = new MyClass<Integer>();
+        i.set(5);
+        System.out.println(i.get());
+    }
+}
+
+```
+
+
+
+#### 제네릭 메소드
+
+하나의 메소드 선언으로 만들어지며 다른 타입들을 인자로 받아서 호출 될 수 있는 메소드이다
+
+
+
+예를 들어서 배열을 리스트로 변환하는 제네릭 메소드를 정의하는 예제
+
+```java
+public <T> List<T> fromArrayToList(T[] a){
+  return Arrays.stream(a).collect(Collectors.toList());
+}
+```
+
+여기서 보면 메소드는 하나이상의 제네릭 타입을 처리할 수 있고, 모든 제네릭 타입들이 메소드의 리턴 타입 전 위치에 추가되어야한다.
+
+
+
+#### Bounded Type Parameter
+
+타입 파라미터들은 bound될 수 있는데, bound된다는 의미는 제한된다는 의미이고, 쉽게 생각하면 **메소드가 받을 수 있는 타입을 제한할 수 있다는 뜻**
+
+```java
+public class Box<T> {
+    private T t;
+    public void set(T t){
+        this.t =t;
+    }
+    public T get() {
+        return t;
+    }
+
+    public <U extends Number> void inspect(U u){
+        //여기서 타입 파라미터 U을 Number로 제한했음 -> extends 키워드를 사용
+        //이렇게 되면 U에는 Integer나, Float, Double와 같은 클래스들만 사용가능
+        System.out.println("T: "+t.getClass().getName());
+        System.out.println("U: "+u.getClass().getName());
+    }
+
+    public static void main(String[] args) {
+        Box<Integer> ibox = new Box<Integer>();
+        ibox.set(10);
+        //그렇기 때문에 여기 밑의 주석부분은 에러가 날수밖에 없다
+        //ibox.inspect("some text");
+    }
+}
+```
+
+
+
+#### WildCard
+
+자바에서 와일드 카드는 "?"으로 표시하며 알 수 없는 타입을 의미할 떄 사용된다. 와일드 카드는 다양한 상황에서 사용될 수 있다. 매개변수의 타입, 필드 그리고 지역변수로 사용될수 있다.
+
+ Object는 모든 자바 클래스들의 부모 타입이긴 하지만 Object 컬렉션이 다른 컬렉션들의 부모는 아니다.
+
+LIst<Object> 타입의 변수에 List<String>변수를 할당하게 되면 컴파일 오류가 발생되는 것을 보고 확인할 수 있다.
+
+
+
+이렇게 하기 떄문에 같은 컬렉션에서 서로 다른 타입들을 추가할 경우 발생할 수 있는 오류를 막기 위한 것이다.
+
+
+
+Upper Bounded Wildcards
+
+이것을 사용하면 변수에 대한 제한을 줄여줄 수 있다.
+
+사용하는 방법은 "?" 을 extends 키워드 앞에 붙여주면 된다.
+
+```java
+public static double sumOfList(List<? extends Number> list) {
+    double s = 0.0;
+    for (Number n : list)
+        s += n.doubleValue();
+    return s;
+}
+```
+
+```java
+List<Integer> li = Arrays.asList(1, 2, 3);
+System.out.println("sum = " + sumOfList(li));
+```
+
+```java
+List<Double> ld = Arrays.asList(1.2, 2.3, 3.5);
+System.out.println("sum = " + sumOfList(ld));
+```
+
+여기서 sumOfList 함수는 Number의 sub type까지 다 사용될 수 있게 된다.
+
+
+
+Unbounded Wildcards
+
+printList라는 메소드를 생각해보자, printList함수의 목적은 어느 타입이든지 출력하기 위함이지만 불가능하다. 왜냐하면 이것은 오직 Object의 list만 출력하기 떄문이다. 즉, List<Integer>, List<String>등 이런 것들을은 List<Object>의 서브타입이 아니기 떄문이다.
+
+```java
+public static void printList(List<Object> list) {
+    for (Object elem : list)
+        System.out.println(elem + " ");
+    System.out.println();
+}
+```
+
+그래서 이 함수를
+
+```java
+public static void printList(List<?> list) {
+    for (Object elem: list)
+        System.out.print(elem + " ");
+    System.out.println();
+}
+```
+
+이렇게 와일드카드인 "?" 을 사용해줘서 변경하게 되면 
+
+```java
+List<Integer> li = Arrays.asList(1, 2, 3);
+List<String>  ls = Arrays.asList("one", "two", "three");
+printList(li);
+printList(ls);
+```
+
+이렇게 사용하는데에 문제가 없다!
+
+
+
+Lower Bounded Wildcards
+
+원래 upper bounded wildcard가 모르는 타입을 자세한 타입이나 서브타입으로 변환되지 않도록 제한했으며, extends 키워드 앞에서 사용했다면 lower bounded wildcard는 해당 타입의 super 타입까지 허용해주며, super 키워드 앞에 와일드카드인 "?" 을 붙혀서 사용한다.
+
+```java
+public static void addNumbers(List<? super Integer> list) {
+    for (int i = 1; i <= 10; i++) {
+        list.add(i);
+    }
+}
+```
+
+또 다른 예시를 들어서 Integer의 lists에 대한 메소드가 필요하게되면 
+
+List<? super Integer> 이렇게 작성함으로써
+
+Integer의 super타입인 Integer, Number, Ojbect이렇게 사용할 수 있다.
+
+그냥 List<Integer> 이렇게 쓰는것보다 범용성이 넓어진다고 생각한다.
+
+
+
 
 
 
@@ -134,3 +324,10 @@ public class vTest {
 
 ---
 
+명품 자바 프로그래밍 - 황기태 
+
+https://sthwin.tistory.com/22
+
+https://medium.com/슬기로운-개발생활/java-generic-자바-제네릭-f4343fa222df
+
+https://docs.oracle.com/javase/tutorial/java/generics/wildcards.html
