@@ -1,7 +1,5 @@
 # 14주차 과제 : 제네릭
 
-- Erasure
-
 
 
 ### 제네릭의 기본 개념
@@ -312,9 +310,54 @@ Integer의 super타입인 Integer, Number, Ojbect이렇게 사용할 수 있다.
 
 
 
+### Erasure Type
+
+제네릭은 자바 언어를 사용함에 있어서 컴파일 시, 더 빡빡한 타입 체크를 가능하게 해주며, 제네릭 프로그래밍을 도와준다. 컴파일러는 컴파일 시, 제네릭에 대해서 type erasure라는  프로세스를 적용한다
+
+- 모든 파라미터들을 그들의 범주안에서 제네릭 타입으로 변경한다.
+- 타입의 안전성을 유지하기 위해 필요한 경우, 타입 캐스트를 진행
 
 
 
+예시를 보면서 확인
+
+```java
+public <T> List<T> genericMethod(List<T> list) { 
+  return list.stream().collect(Collectors.toList()); 
+}
+
+```
+
+이렇게 진행을 하려고하면
+
+```java
+public <T> List<T> genericMethod(List<Object> list) { 
+  return list.stream().collect(Collectors.toList()); 
+}
+
+```
+
+타입 이레이저가 적용되면서 특정 타입으로 제한되지 않은 T를 위와 같이 Object로 대체된다
+
+만약 
+
+```java
+public <T extends Building> void genericMethod(T t){
+	...
+}
+```
+
+이렇게 타입이 제한되어있을 경우에는 이 타입은 컴파일 시점에서 제한된 타입으로 교체
+
+```java
+public void genericMethod(Building t){
+	...
+}
+```
+
+
+
+이렇게 제네릭에 관해서 알아보았고, 제네릭은 타입의 정확성을 정확하게 해주며, 애플리케이션으로 하여금 추가적인 오버헤드 없이 제네릭 알고리즘의 구현을 가능하도록 도와주는거 같다
 
 
 
@@ -331,3 +374,5 @@ https://sthwin.tistory.com/22
 https://medium.com/슬기로운-개발생활/java-generic-자바-제네릭-f4343fa222df
 
 https://docs.oracle.com/javase/tutorial/java/generics/wildcards.html
+
+https://docs.oracle.com/javase/tutorial/java/generics/erasure.html
