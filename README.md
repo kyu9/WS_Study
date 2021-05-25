@@ -1,4 +1,4 @@
-https://github.com/whiteship/live-study/issues
+https://github.com/whiteship/live-study
 
 매일 토요일 15시까지 -> 유튜브 라이브에서 피드백을 해주신다!
 
